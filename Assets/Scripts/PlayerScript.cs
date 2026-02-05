@@ -5,9 +5,6 @@ public class PlayerScript : MonoBehaviour
 {
     private Rigidbody rb;
     private float movementSpeed = 2f;
-
-    [SerializeField] Transform groundCheck;
-
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -56,10 +53,5 @@ public class PlayerScript : MonoBehaviour
             rb.linearVelocity.y,
             movement.z * movementSpeed
             );
-    }
-
-    void GroundChecker()
-    {
-        bool isGrounded = Physics.Raycast(transform.position, Vector3.down, 1.1f);
     }
 }
