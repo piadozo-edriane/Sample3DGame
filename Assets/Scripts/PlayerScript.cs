@@ -5,6 +5,8 @@ public class PlayerScript : MonoBehaviour
 {
     private Rigidbody rb;
     private float movementSpeed = 2f;
+    [SerializeField] Transform groundCheck;
+    [SerializeField] LayerMask groundLayer;
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -17,6 +19,7 @@ public class PlayerScript : MonoBehaviour
     void Update()
     {
         HandleMovement();
+        isGrounded();
     }
 
     void HandleMovement()
@@ -33,7 +36,7 @@ public class PlayerScript : MonoBehaviour
             movement.z -= 1;
         }
 
-        if (Keyboard.current.spaceKey.wasPressedThisFrame)
+        if (Keyboard.current.spaceKey.wasPressedThisFrame && isGrounded())
         {
             rb.linearVelocity = new Vector3(rb.linearVelocity.x, 5, rb.linearVelocity.y);
         }
@@ -53,5 +56,10 @@ public class PlayerScript : MonoBehaviour
             rb.linearVelocity.y,
             movement.z * movementSpeed
             );
+    }
+
+    public bool isGrounded()
+    {
+             return Physics.Raycast(groundCheck.position, Vector3.down, 0.1f);
     }
 }
